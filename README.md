@@ -312,9 +312,3 @@ Between runs, permanently evolve your power:
 *A whole world awaits — survive, evolve, become the legend.*
 
 </div>
-
----
-
-> 💡 **Note on language switching:** GitHub doesn't support automatic browser-language detection in README files. This README presents both languages side by side with quick-jump links at the top and bottom. The **game itself** switches between Arabic and English automatically based on your browser's language.
->
-> 💡 **ملاحظة عن تبديل اللغة:** GitHub لا يدعم الكشف التلقائي عن لغة المتصفح في ملفات README. يقدّم هذا الملف اللغتين جنبًا إلى جنب مع روابط تنقّل سريعة في الأعلى والأسفل. أما **اللعبة نفسها** فتتبدّل بين العربية والإنجليزية تلقائيًا حسب لغة متصفحك.
