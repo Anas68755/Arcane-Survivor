@@ -219,6 +219,46 @@ html[lang="en"] .game-desc{font-size:.78em}
   .menu-grid{grid-template-columns:1fr}
 }
 @media (max-height:520px){ #menu-box{padding:14px;gap:8px} .game-title{font-size:1.7em} }
+/* ─────────── v2.2 خزانة السكنات المخصصة ─────────── */
+.wd-toolbar{display:flex;gap:8px;padding:10px 14px 0;flex-wrap:wrap}
+.wd-toolbar .btn{flex:1;min-width:104px;min-height:36px}
+.wd-store{display:flex;align-items:center;gap:10px;padding:8px 14px 0}
+.wd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px;padding:12px 14px 18px}
+.wd-card{background:var(--panel2);border:1.5px solid var(--line);border-radius:var(--r);padding:8px;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center;position:relative;cursor:pointer;transition:transform .12s,border-color .12s,box-shadow .12s}
+.wd-card:active{transform:scale(.96)}
+.wd-card.active{border-color:var(--gold);box-shadow:0 0 14px rgba(245,197,66,.28)}
+.wd-card.locked{opacity:.55;filter:grayscale(.45)}
+.wd-card .wd-prev{width:64px;height:64px;border-radius:12px;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.09),rgba(0,0,0,.45));display:flex;align-items:center;justify-content:center;font-size:40px;overflow:hidden}
+.wd-card .wd-prev img{width:100%;height:100%;object-fit:contain}
+.wd-badge{position:absolute;top:6px;inset-inline-start:8px;font-size:.85em;z-index:2}
+.wd-name{font-weight:800;font-size:.8em;line-height:1.25;min-height:2.4em;display:flex;align-items:center}
+.wd-sub{font-size:.66em;color:var(--dim);line-height:1.3;min-height:2.6em}
+.wd-acts{display:flex;gap:4px;width:100%;flex-wrap:wrap}
+.wd-acts .btn{flex:1;min-height:30px;font-size:.72em;padding:4px 2px;min-width:0}
+.wd-sechead{grid-column:1/-1;font-weight:900;color:var(--dim);font-size:.75em;padding:8px 2px 0;text-align:start}
+/* نافذة السكن */
+.wdm-body{display:flex;flex-direction:column;gap:8px;padding:12px 14px}
+.wdm-lbl{font-size:.75em;font-weight:800;color:var(--dim)}
+.wdm-in{background:var(--panel2);border:1.5px solid var(--line);border-radius:10px;color:var(--txt);padding:9px 12px;font:inherit;width:100%}
+.wdm-in:focus{outline:none;border-color:var(--acc)}
+.seg.on{border-color:var(--acc);color:var(--acc)}
+.wdm-quick{display:flex;gap:6px;flex-wrap:wrap;padding-top:6px}
+.wdm-quick button{font-size:20px;background:var(--panel2);border:1.5px solid var(--line);border-radius:8px;padding:3px 8px;cursor:pointer;color:var(--txt)}
+.wdm-drop{border:2px dashed var(--line);border-radius:12px;padding:22px 10px;text-align:center;color:var(--dim);cursor:pointer;font-size:.85em;transition:border-color .15s,background .15s}
+.wdm-drop.over{border-color:var(--acc);background:rgba(126,232,250,.08)}
+.wdm-previews{display:flex;gap:14px;align-items:flex-end;justify-content:center;padding:6px 0}
+.wdm-pv{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.65em;color:var(--dim)}
+.wdm-pv i{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;font-size:22px;font-style:normal;overflow:hidden}
+.wdm-pv.big i{width:96px;height:96px;font-size:70px;border-radius:14px}
+.wdm-pv i img{width:100%;height:100%;object-fit:contain}
+/* الاحتفال بفتح سكن */
+#wd-celebrate{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;background:rgba(4,6,12,.72);backdrop-filter:blur(4px)}
+#wd-celebrate.hidden{display:none}
+.wdc-box{display:flex;flex-direction:column;align-items:center;gap:10px;animation:wdcPop .5s cubic-bezier(.2,1.6,.4,1)}
+.wdc-box i{width:110px;height:110px;font-size:78px;font-style:normal;display:flex;align-items:center;justify-content:center;border-radius:24px;background:radial-gradient(circle,rgba(245,197,66,.25),rgba(0,0,0,.4));box-shadow:0 0 40px rgba(245,197,66,.45);overflow:hidden}
+.wdc-box i img{width:100%;height:100%;object-fit:contain}
+#wdc-name{font-weight:900;font-size:1.2em}
+@keyframes wdcPop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
 </style>
 </head>
 <body>
@@ -457,24 +497,98 @@ html[lang="en"] .game-desc{font-size:.78em}
   </div>
 </section>
 
-<!-- ═══════ الخزانة (الكوزمتك) ═══════ -->
+<!-- ═══════ خزانة السكنات المخصصة v2.2 ═══════ -->
 <section class="screen hidden" id="screen-wardrobe">
   <div class="panel">
     <div class="scr-head"><div class="scr-title" data-i="wardrobe">الخزانة</div>
       <span class="chip gold-txt"><i class="dot" style="background:var(--gold)"></i><b id="ward-gold">0</b></span>
       <span class="chip purple-txt"><i class="dot" style="background:var(--acc2)"></i><b id="ward-shards">0</b></span>
       <button class="btn ghost btn-back" data-i="back">رجوع</button></div>
-    <div class="tabs ward-tabs">
-      <button class="tab on" data-w="skins" data-i="skinsTab">الأزياء</button>
-      <button class="tab" data-w="trails" data-i="trailsTab">آثار الأقدام</button>
-      <button class="tab" data-w="colors" data-i="colorsTab">ألوان السحر</button>
+    <div class="wd-toolbar">
+      <button class="btn gold" id="wd-add" data-i="wdAdd">+ سكن جديد</button>
+      <button class="btn ghost" id="wd-clean" data-i="wdClean">حذف غير المستخدمة</button>
+      <button class="btn ghost" id="wd-reset" data-i="wdReset">إعادة تعيين الكل</button>
     </div>
-    <div class="scroll"><div class="ward-grid grid-auto"></div></div>
+    <div class="wd-store">
+      <span style="font-size:.72em;color:var(--dim);font-weight:800" data-i="wdStore">تخزين</span>
+      <div class="bar" style="flex:1;height:6px"><i id="wd-store-fill" style="background:var(--ok)"></i></div>
+      <span id="wd-store-txt" class="dim" style="font-size:.72em;white-space:nowrap"></span>
+    </div>
+    <div class="tabs" id="wd-tabs">
+      <button class="tab on" data-w="player" data-i="wdTabPlayer">الشخصيات</button>
+      <button class="tab" data-w="weapon" data-i="wdTabWeapons">الأسلحة</button>
+      <button class="tab" data-w="enemy" data-i="wdTabEnemies">الأعداء</button>
+      <button class="tab" data-w="familiar" data-i="wdTabFamiliars">المرافقون</button>
+      <button class="tab" data-w="effect" data-i="wdTabEffects">التأثيرات</button>
+    </div>
+    <div class="scroll"><div class="wd-grid" id="wd-grid"></div></div>
   </div>
 </section>
 
+<!-- ═══════ نافذة إضافة/تعديل سكن ═══════ -->
+<section class="screen hidden" id="screen-skin" style="z-index:86">
+  <div class="panel" style="width:min(560px,94vw)">
+    <div class="scr-head"><div class="scr-title" id="wdm-title" data-i="wdAdd">+ سكن جديد</div>
+      <button class="btn ghost btn-back" data-i="cancel">إلغاء</button></div>
+    <div class="scroll wdm-body">
+      <label class="wdm-lbl" data-i="wdName">الاسم</label>
+      <input id="wdm-name" class="wdm-in" maxlength="24" placeholder="🧙">
+      <label class="wdm-lbl" data-i="wdKind">المصدر</label>
+      <div class="row" style="gap:8px">
+        <button class="btn ghost seg on" id="wdm-k-emoji" style="flex:1" data-i="wdEmoji">إيموجي</button>
+        <button class="btn ghost seg" id="wdm-k-image" style="flex:1" data-i="wdImage">صورة</button>
+      </div>
+      <div id="wdm-emoji-box">
+        <input id="wdm-emoji" class="wdm-in" maxlength="8" placeholder="🧙">
+        <div class="wdm-quick" id="wdm-quick"></div>
+      </div>
+      <div id="wdm-img-box" class="hidden">
+        <div id="wdm-drop" class="wdm-drop"><span data-i="wdDrop">اسحب صورة هنا أو انقر للاختيار</span><input type="file" id="wdm-file" accept="image/*" class="hidden"></div>
+      </div>
+      <div class="wdm-previews">
+        <div class="wdm-pv"><i id="wdm-pv32"></i><span>32px</span></div>
+        <div class="wdm-pv big"><i id="wdm-pv96"></i><span>96px</span></div>
+      </div>
+      <label class="wdm-lbl" data-i="wdCat">الفئة</label>
+      <select id="wdm-cat" class="wdm-in">
+        <option value="player" data-i="wdTabPlayer">الشخصيات</option>
+        <option value="weapon" data-i="wdTabWeapons">الأسلحة</option>
+        <option value="enemy" data-i="wdTabEnemies">الأعداء</option>
+        <option value="familiar" data-i="wdTabFamiliars">المرافقون</option>
+        <option value="effect" data-i="wdTabEffects">التأثيرات</option>
+      </select>
+      <label class="wdm-lbl" data-i="wdTarget">الهدف</label>
+      <select id="wdm-target" class="wdm-in"></select>
+      <label class="wdm-lbl" data-i="wdUnlock">شرط الفتح</label>
+      <div class="row" style="gap:8px">
+        <select id="wdm-utype" class="wdm-in" style="flex:1">
+          <option value="none" data-i="wdUnNone">مفتوح دائمًا</option>
+          <option value="level" data-i="wdUnLevel">بالمستوى</option>
+          <option value="gold" data-i="wdUnGold">بالذهب</option>
+          <option value="achievement" data-i="wdUnAch">بالإنجاز</option>
+          <option value="streak" data-i="wdUnStreak">بسلسلة انتصارات</option>
+          <option value="runs" data-i="wdUnRuns">بعدد الجولات</option>
+          <option value="secret" data-i="wdUnSecret">سرّي (؟؟؟)</option>
+        </select>
+        <input id="wdm-uval" class="wdm-in" type="text" inputmode="numeric" style="width:130px" placeholder="10">
+        <select id="wdm-uach" class="wdm-in hidden" style="flex:1"></select>
+      </div>
+      <div class="dim" id="wdm-uhint" style="font-size:.78em"></div>
+    </div>
+    <div class="row" style="padding:10px 14px;gap:10px">
+      <button class="btn gold" id="wdm-save" data-i="wdSave" style="flex:1">حفظ</button>
+      <button class="btn ghost btn-back" data-i="cancel" style="flex:1">إلغاء</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ احتفال فتح سكن ═══════ -->
+<div id="wd-celebrate" class="hidden">
+  <div class="wdc-box"><i id="wdc-prev"></i><div id="wdc-name"></div><div class="dim" data-i="newUnlock">فتح جديد!</div></div>
+</div>
+
 <!-- ═══════ تأكيد عام ═══════ -->
-<section class="screen hidden" id="screen-confirm" style="z-index:85">
+<section class="screen hidden" id="screen-confirm" style="z-index:90">
   <div class="panel" style="width:min(380px,92vw);gap:14px;text-align:center">
     <div id="confirm-text" style="font-weight:800"></div>
     <div class="row" style="justify-content:center"><button class="btn danger" id="confirm-yes" data-i="yes">نعم</button><button class="btn ghost" id="confirm-no" data-i="cancel">إلغاء</button></div>
@@ -1210,17 +1324,19 @@ const Save = {
     return new Promise((resolve) => {
       let done = false;
       const finish = (ok) => { if (!done) { done = true; resolve(ok); } };
+      // v2.2: نسخة 2 تضيف مخزن skin_images لصور السكنات المخصصة
+      const upgrade = (db) => { if (!db.objectStoreNames.contains('meta')) db.createObjectStore('meta'); if (!db.objectStoreNames.contains('skin_images')) db.createObjectStore('skin_images'); };
       try {
-        const req = indexedDB.open('ArcaneSurvivorDB', 1);
-        req.onupgradeneeded = () => { const db = req.result; if (!db.objectStoreNames.contains('meta')) db.createObjectStore('meta'); };
+        const req = indexedDB.open('ArcaneSurvivorDB', 2);
+        req.onupgradeneeded = () => upgrade(req.result);
         req.onsuccess = () => {
           this.db = req.result;
-          // تحصين: قاعدة قديمة بلا مخزن ← إعادة فتح بنسخة أعلى لإنشائه
-          if (!this.db.objectStoreNames.contains('meta')) {
+          // تحصين: قاعدة قديمة بنسخة أقل أو بلا مخازن ← إعادة فتح بنسخة أعلى لإنشائها
+          if (!this.db.objectStoreNames.contains('meta') || !this.db.objectStoreNames.contains('skin_images')) {
             const v = this.db.version;
             this.db.close();
-            const req2 = indexedDB.open('ArcaneSurvivorDB', v + 1);
-            req2.onupgradeneeded = () => { const db2 = req2.result; if (!db2.objectStoreNames.contains('meta')) db2.createObjectStore('meta'); };
+            const req2 = indexedDB.open('ArcaneSurvivorDB', Math.max(2, v + 1));
+            req2.onupgradeneeded = () => upgrade(req2.result);
             req2.onsuccess = () => { this.db = req2.result; this.driver = 'idb'; finish(true); };
             req2.onerror = () => { this.driver = 'ls'; finish(false); };
             return;
@@ -1250,6 +1366,51 @@ const Save = {
       try {
         const tx = this.db.transaction('meta', 'readwrite');
         tx.objectStore('meta').put(val, 'main');
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+      } catch (e) { resolve(false); }
+    });
+  },
+
+  // ── v2.2: دوال مخازن عامة (تستخدمها صور السكنات في مخزن skin_images) ──
+  storeGet(store, key) {
+    return new Promise((resolve) => {
+      if (!this.db || this.driver !== 'idb' || !this.db.objectStoreNames.contains(store)) return resolve(null);
+      try {
+        const rq = this.db.transaction(store, 'readonly').objectStore(store).get(key);
+        rq.onsuccess = () => resolve(rq.result === undefined ? null : rq.result);
+        rq.onerror = () => resolve(null);
+      } catch (e) { resolve(null); }
+    });
+  },
+  storePut(store, key, val) {
+    return new Promise((resolve) => {
+      if (!this.db || this.driver !== 'idb' || !this.db.objectStoreNames.contains(store)) return resolve(false);
+      try {
+        const tx = this.db.transaction(store, 'readwrite');
+        tx.objectStore(store).put(val, key);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+      } catch (e) { resolve(false); }
+    });
+  },
+  storeDel(store, key) {
+    return new Promise((resolve) => {
+      if (!this.db || this.driver !== 'idb' || !this.db.objectStoreNames.contains(store)) return resolve(false);
+      try {
+        const tx = this.db.transaction(store, 'readwrite');
+        tx.objectStore(store).delete(key);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+      } catch (e) { resolve(false); }
+    });
+  },
+  storeClear(store) {
+    return new Promise((resolve) => {
+      if (!this.db || this.driver !== 'idb' || !this.db.objectStoreNames.contains(store)) return resolve(false);
+      try {
+        const tx = this.db.transaction(store, 'readwrite');
+        tx.objectStore(store).clear();
         tx.oncomplete = () => resolve(true);
         tx.onerror = () => resolve(false);
       } catch (e) { resolve(false); }
@@ -6806,6 +6967,1032 @@ Game.initPWA = function () {
       ' | fragments ' + Data.FRAGMENTS.length + ' | skins ' + Data.SKINS.length);
     return boot();
   };
+})();
+/* ═══════════ v2.2 — I18N: مفاتيح خزانة السكنات المخصصة (تكافؤ عربي/إنجليزي مضمون) ═══════════ */
+(function () {
+  // نمط p21: قائمة واحدة [مفتاح، عربي، إنجليزي] تُدمج في القاموسين معًا ← صفر نواقص
+  const STR = [
+    // التبويبات وشريط الأدوات
+    ['wdTabPlayer', 'الشخصيات', 'Characters'], ['wdTabWeapons', 'الأسلحة', 'Weapons'],
+    ['wdTabEnemies', 'الأعداء', 'Enemies'], ['wdTabFamiliars', 'المرافقون', 'Familiars'],
+    ['wdTabEffects', 'التأثيرات', 'Effects'],
+    ['wdAdd', '+ سكن جديد', '+ New Skin'], ['wdClean', 'حذف غير المستخدمة', 'Delete Unused'],
+    ['wdReset', 'إعادة تعيين الكل', 'Reset All'], ['wdEdit', 'تعديل', 'Edit'],
+    ['wdDup', 'تكرار', 'Duplicate'], ['wdDel', 'حذف', 'Delete'], ['wdApply', 'ارتدِ', 'Apply'],
+    // عداد التخزين
+    ['wdStore', 'تخزين', 'Storage'], ['wdStoreTxt', '{k} مستخدمة · {n} صورة', '{k} used · {n} images'],
+    ['wdStoreWarn', 'اقتربت من حد التخزين! احذف السكنات غير المستخدمة', 'Storage almost full! Delete unused skins'],
+    ['cleanedToast', 'حُذف {n} سكن غير مستخدم', 'Deleted {n} unused skins'],
+    ['nothingToClean', 'لا توجد سكنات غير مستخدمة', 'No unused skins to delete'],
+    ['wdResetDone', 'أُعيد ضبط الخزانة بالكامل', 'Wardrobe fully reset'],
+    // نافذة السكن
+    ['wdEditTitle', 'تعديل السكن', 'Edit Skin'],
+    ['wdName', 'الاسم', 'Name'], ['wdKind', 'المصدر', 'Source'],
+    ['wdEmoji', 'إيموجي', 'Emoji'], ['wdImage', 'صورة', 'Image'],
+    ['wdDrop', 'اسحب صورة هنا أو انقر للاختيار', 'Drop an image here or click to browse'],
+    ['wdCompressing', 'جارٍ ضغط الصورة…', 'Compressing image…'],
+    ['wdCat', 'الفئة', 'Category'], ['wdTarget', 'الهدف', 'Target'],
+    ['wdUnlock', 'شرط الفتح', 'Unlock Condition'],
+    ['wdUnNone', 'مفتوح دائمًا', 'Always unlocked'], ['wdUnLevel', 'بالمستوى', 'By level'],
+    ['wdUnGold', 'بالذهب', 'By gold'], ['wdUnAch', 'بالإنجاز', 'By achievement'],
+    ['wdUnStreak', 'بسلسلة انتصارات', 'By win streak'], ['wdUnRuns', 'بعدد الجولات', 'By runs played'],
+    ['wdUnSecret', 'سرّي (؟؟؟)', 'Secret (???)'],
+    ['wdSave', 'حفظ', 'Save'], ['wdReplaceImg', 'استبدال الصورة', 'Replace Image'],
+    ['wdSecretHint', 'صيغة الشرط السري: statKey:N مثل kills:1000 أو ach:bosses_50', 'Secret format: statKey:N like kills:1000 or ach:bosses_50'],
+    // أخطاء وتنبيهات
+    ['imgTooBig', 'الصورة كبيرة جدًا، جرّب صورة أصغر', 'Image is too large, try a smaller one'],
+    ['imgBad', 'تعذّر قراءة الصورة', 'Could not read the image'],
+    ['wdNameReq', 'أدخل اسمًا للسكن', 'Enter a skin name'],
+    ['wdNeedData', 'أضف إيموجي أو صورة أولًا', 'Add an emoji or image first'],
+    ['wdNeedTarget', 'اختر هدفًا صالحًا', 'Pick a valid target'],
+    ['skinSaved', 'حُفظ السكن', 'Skin saved'],
+    ['skinDeleted', 'حُذف السكن', 'Skin deleted'],
+    ['appliedToast', 'وُرّد السكن!', 'Skin applied!'],
+    ['clearedSkin', 'أُزيل السكن المُرتدى', 'Skin removed'],
+    // حالات البطاقة
+    ['wdActive', 'نشط', 'Active'], ['wdUnlocked', 'مفتوح', 'Unlocked'],
+    ['wdLocked', 'مقفل', 'Locked'], ['wdBuiltin', 'أساسي', 'Built-in'], ['wdCustom', 'مخصص', 'Custom'],
+    ['skinUnlockedToast', 'سكن جديد مفتوح: {n}!', 'New skin unlocked: {n}!'],
+    ['confirmDelSkin', 'سيُحذف هذا السكن نهائيًا. لا يمكن التراجع. متابعة؟', 'This skin will be permanently deleted. This cannot be undone. Continue?'],
+    ['confirmClean', 'سيُحذف {n} سكن غير مُرتدى نهائيًا. متابعة؟', '{n} unequipped skins will be permanently deleted. Continue?'],
+    ['confirmResetSkins', 'ستُحذف كل السكنات المخصصة وحالات الفتح نهائيًا. متابعة؟', 'All custom skins and unlock states will be permanently deleted. Continue?'],
+    ['confirmBuySkin', 'شراء هذا السكن بـ{n} ذهب؟', 'Buy this skin for {n} gold?'],
+    // نصوص شروط الفتح
+    ['wdUnlockLevel', 'يُفتح عند المستوى {n}', 'Unlocks at level {n}'],
+    ['wdUnlockGold', 'اشترِ بـ{n} ذهب', 'Buy for {n} gold'],
+    ['wdUnlockAch', 'بالإنجاز: {n}', 'Requires achievement: {n}'],
+    ['wdUnlockStreak', '{n} انتصارات متتالية', '{n} wins in a row'],
+    ['wdUnlockRuns', 'العب {n} جولات', 'Play {n} runs'],
+    ['wdUnlockSecret', '؟؟؟', '???'],
+    // حالات فارغة وأقسام
+    ['wdNoCustom', 'لا سكنات مخصصة بعد — اضغط «+ سكن جديد»', 'No custom skins yet — tap "+ New Skin"'],
+    ['wdSecSkins', 'أزياء الشخصيات', 'Character Skins'], ['wdSecTrails', 'آثار الأقدام', 'Footprint Trails'],
+    ['wdSecColors', 'ألوان السحر', 'Spell Colors'], ['wdSecCustom', 'سكناتك المخصصة', 'Your Custom Skins'],
+    ['wdHintSlot', 'اضغط لإضافة سكن', 'Tap to add a skin'],
+    ['wdTrailTarget', 'أثر الأقدام', 'Footprint Trail'], ['wdColorTarget', 'لون السحر', 'Spell Color'],
+    ['wdDefaultSkin', 'الافتراضي', 'Default'], ['wdAchNone', 'لا إنجازات بعد', 'No achievements yet']
+  ];
+  const ar = {}, en = {};
+  for (const s of STR) { ar[s[0]] = s[1]; en[s[0]] = s[2]; }
+  Object.assign(I18N.dict.ar, ar);
+  Object.assign(I18N.dict.en, en);
+  // فحص التكافؤ: لوحة التصحيح تعرض أي فرق إن وجد
+  try { if (typeof I18N.check === 'function') I18N.check(); } catch (e) { }
+})();
+
+// ─── حقن المعرّفات في تعريفات الأعداء والزعماء (تعريفاتها مفاتيح بلا حقل id داخلي)
+// يلزم لاستهداف سكنات الأعداء عبر e.def.id دون تعديل منظومت التوليد ───
+(function () {
+  try {
+    for (const k in Data.ENEMIES) { const d = Data.ENEMIES[k]; if (d && !d.id) d.id = k; }
+    for (const k in Data.BOSSES) { const d = Data.BOSSES[k]; if (d && !d.id) d.id = k; }
+    Data.MINIBOSSES.forEach(m => { if (m && !m.id && m.ar) m.id = m.ar; });
+  } catch (e) { Log.warn('enemy id injection', e.message); }
+})();
+/* ═══════════ v2.2 — Skins/ — نظام السكنات المخصصة: تخزين هجين ذكي ═══════════
+   localStorage  : تعريفات السكنات (الإيموجي) + حالة الفتح + الارتداء (صغير الحجم)
+   IndexedDB     : صور السكنات المضغوطة في مخزن skin_images (يدعم عشرات MB)
+   loadSkin()    : موحّدة — تحاول الذاكرة ثم localStorage ثم IndexedDB                */
+const Skins = AS.Skins = {
+  DEF_KEY: 'arc_skins', UNLOCK_KEY: 'arc_skins_unlocked', STATE_KEY: 'arc_skins_state',
+  IMG_STORE: 'skin_images', LS_LIMIT: 5 * 1024 * 1024, LS_WARN: 4 * 1024 * 1024,
+  defs: {},            // id → تعريف السكن المخصص
+  unlocked: {},        // id → timestamp الفتح (مفتاح arc_skins_unlocked المطلوب)
+  state: { active: {}, totalSpent: 0 },
+  imgCache: new Map(), // id → {url, cv, ready} صور فكّ التشفير
+  spriteCache: new Map(), // id → كانفس سبرايت 128px للرسم على الواقع
+  _any: { enemy: false }, // رايات سريعة تُحدّث عند التغيير (بدل فحص المفاتيح كل إطار)
+  _warned: false,
+
+  /* ─── القراءة والكتابة الآمنة ─── */
+  lsJSON(key, fb) { try { const s = localStorage.getItem(key); return s ? JSON.parse(s) : fb; } catch (e) { return fb; } },
+  saveDefs() { try { localStorage.setItem(this.DEF_KEY, JSON.stringify(this.defs)); return true; } catch (e) { this.warnFull(); return false; } },
+  saveUnlocked() { try { localStorage.setItem(this.UNLOCK_KEY, JSON.stringify(this.unlocked)); } catch (e) { } },
+  saveState() { try { localStorage.setItem(this.STATE_KEY, JSON.stringify(this.state)); } catch (e) { } },
+  warnFull() {
+    if (AS.UI && !this._warned) { this._warned = true; try { UI.toast(t('wdStoreWarn'), 'bad'); } catch (e) { } setTimeout(() => { this._warned = false; }, 8000); }
+    Log.warn('Skins storage full');
+  },
+
+  /* ─── التحميل عند الإقلاع ─── */
+  loadAll() {
+    this.defs = this.lsJSON(this.DEF_KEY, {}) || {};
+    this.unlocked = this.lsJSON(this.UNLOCK_KEY, {}) || {};
+    const st = this.lsJSON(this.STATE_KEY, null);
+    this.state = (st && typeof st === 'object' && st.active) ? st : { active: {}, totalSpent: 0 };
+    // تنظيف الإشارات المعلّقة (سكن محذوف ظل مرتدى)
+    for (const k in this.state.active) { const id = this.state.active[k]; if (id && !this.defs[id]) delete this.state.active[k]; }
+    this.preloadImages();
+    this.recountAny();
+    Log.log('Skins: ' + Object.keys(this.defs).length + ' custom, ' + Object.keys(this.unlocked).length + ' unlocked');
+  },
+  recountAny() { try { this._any.enemy = Object.keys(this.state.active).some(k => String(k).indexOf('enemy:') === 0); } catch (e) { } },
+
+  /* ─── loadSkin الموحّدة: الذاكرة ← localStorage ← IndexedDB ─── */
+  loadSkin(id) {
+    const def = this.defs[id];
+    if (!def) return Promise.resolve(null);
+    if (def.type === 'emoji' || (def.data && def.data.length)) return Promise.resolve(def.data);
+    const c = this.imgCache.get(id);
+    if (c && c.url) return Promise.resolve(c.url);
+    return Save.storeGet(this.IMG_STORE, id).then(url => {
+      if (url) { this.imgCache.set(id, { url, cv: null, ready: false }); this.buildMaster(def, url); }
+      return url || null;
+    });
+  },
+  // تحميل كل الصور دفعة واحدة عند الإقلاع ليكون العرض فوريًا في الواجهة
+  preloadImages() {
+    for (const id in this.defs) { const d = this.defs[id]; if (d.type === 'image' && !this.imgCache.has(id)) this.loadSkin(id); }
+  },
+  // بناء سبرايت 128px من رابط بيانات
+  buildMaster(def, url) {
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const cv = document.createElement('canvas'); cv.width = 128; cv.height = 128;
+        const g = cv.getContext('2d'); g.imageSmoothingQuality = 'high';
+        const k = Math.min(128 / img.width, 128 / img.height, 1), w = img.width * k, h = img.height * k;
+        g.drawImage(img, (128 - w) / 2, (128 - h) / 2, w, h);
+        this.imgCache.set(def.id, { url, cv, ready: true });
+        this.spriteCache.delete(def.id);
+        Bus.emit('skinsLoaded');
+      } catch (e) { Log.warn('skin master', e.message); }
+    };
+    img.onerror = () => Log.warn('skin image failed', def.id);
+    img.src = url;
+  },
+
+  /* ─── ضغط الصور تلقائيًا: 128px كحد أقصى + WEBP 0.85 (بديل PNG) ─── */
+  compressImage(file) {
+    return new Promise((resolve) => {
+      if (!file || !/^image\//.test(file.type || '')) return resolve({ err: 'imgBad' });
+      if (file.size > 15 * 1024 * 1024) return resolve({ err: 'imgTooBig' });
+      const finish = (bmp, revoke) => {
+        try {
+          const w = bmp.width || bmp.naturalWidth, h = bmp.height || bmp.naturalHeight;
+          if (!w || !h) { if (revoke) URL.revokeObjectURL(revoke); return resolve({ err: 'imgBad' }); }
+          const k = Math.min(1, 128 / Math.max(w, h));
+          const cv = document.createElement('canvas');
+          cv.width = Math.max(1, Math.round(w * k)); cv.height = Math.max(1, Math.round(h * k));
+          const g = cv.getContext('2d'); g.imageSmoothingQuality = 'high';
+          g.drawImage(bmp, 0, 0, cv.width, cv.height);
+          let out = '';
+          try { out = cv.toDataURL('image/webp', 0.85); } catch (e) { }
+          // بعض المتصفحات تتجاهل webp وتُرجع png — تحقق من الترويسة
+          if (!out || !out.startsWith('data:image/webp')) { try { out = cv.toDataURL('image/png'); } catch (e2) { } }
+          if (revoke) URL.revokeObjectURL(revoke);
+          if (!out) return resolve({ err: 'imgBad' });
+          // سقف صارم: dataURL حتى ~700KB مضمون في كل المحركات
+          if (out.length > 700000) return resolve({ err: 'imgTooBig' });
+          resolve({ url: out, bytes: Math.floor(out.length * 0.75) });
+        } catch (e) { resolve({ err: 'imgBad' }); }
+      };
+      if (window.createImageBitmap) {
+        createImageBitmap(file).then(bmp => finish(bmp, null)).catch(() => {
+          const u = URL.createObjectURL(file), im = new Image();
+          im.onload = () => finish(im, u); im.onerror = () => { URL.revokeObjectURL(u); resolve({ err: 'imgBad' }); };
+          im.src = u;
+        });
+      } else {
+        const u = URL.createObjectURL(file), im = new Image();
+        im.onload = () => finish(im, u); im.onerror = () => { URL.revokeObjectURL(u); resolve({ err: 'imgBad' }); };
+        im.src = u;
+      }
+    });
+  },
+
+  /* ─── CRUD ─── */
+  uid() { return 'cst_' + Date.now().toString(36) + Math.floor(Math.random() * 46656).toString(36); },
+  add(def) {
+    const id = this.uid();
+    const d = Object.assign({ id, name: 'Skin', type: 'emoji', data: '✨', category: 'player', target: 'arcane', unlock: { type: 'none', value: null }, isDefault: false, createdAt: Date.now() }, def, { id, isDefault: false });
+    const img = d._img; delete d._img; // بيانات الصورة الخام لا تُخزّن في التعريف
+    this.defs[id] = d;
+    if (d.unlock && d.unlock.type === 'none') this.unlocked[id] = Date.now();
+    if (d.type === 'image' && img) {
+      // الصورة: IndexedDB أولًا؛ وإن لم يتوفر تُحفظ dataURL صغيرة في التعريف نفسه
+      Save.storePut(this.IMG_STORE, id, img).then(ok => {
+        this.imgCache.set(id, { url: img, cv: null, ready: false });
+        this.buildMaster(d, img);
+        if (!ok) { d.data = img; this.saveDefs(); } // احتياطي localStorage للصور الصغيرة
+      });
+    }
+    this.saveDefs(); this.saveUnlocked();
+    return d;
+  },
+  update(id, patch) {
+    const d = this.defs[id]; if (!d) return null;
+    Object.assign(d, patch, { id });
+    if (d.type === 'image' && d._img) {
+      const url = d._img; delete d._img;
+      Save.storePut(this.IMG_STORE, id, url).then(ok => { if (!ok) d.data = url; this.saveDefs(); });
+      this.imgCache.set(id, { url, cv: null, ready: false });
+      this.buildMaster(d, url);
+    }
+    this.saveDefs(); return d;
+  },
+  remove(id) {
+    const d = this.defs[id]; if (!d || d.isDefault) return false;
+    delete this.defs[id]; delete this.unlocked[id];
+    for (const k in this.state.active) if (this.state.active[k] === id) delete this.state.active[k];
+    this.imgCache.delete(id); this.spriteCache.delete(id);
+    Save.storeDel(this.IMG_STORE, id);
+    this.saveDefs(); this.saveUnlocked(); this.saveState(); this.recountAny();
+    return true;
+  },
+  duplicate(id) {
+    const d = this.defs[id]; if (!d) return null;
+    const copy = JSON.parse(JSON.stringify(d));
+    copy.name = d.name + ' *'; copy.createdAt = Date.now();
+    copy.unlock = { type: 'none', value: null }; // النسخة مفتوحة فورًا
+    const nd = this.add(copy);
+    if (nd.type === 'image') this.loadSkin(id).then(url => { if (url) Save.storePut(this.IMG_STORE, nd.id, url); });
+    return nd;
+  },
+  resetAll() {
+    this.defs = {}; this.unlocked = {}; this.state = { active: {}, totalSpent: 0 };
+    this.imgCache.clear(); this.spriteCache.clear();
+    try { localStorage.removeItem(this.DEF_KEY); localStorage.removeItem(this.UNLOCK_KEY); localStorage.removeItem(this.STATE_KEY); } catch (e) { }
+    Save.storeClear(this.IMG_STORE);
+    this.recountAny();
+  },
+
+  /* ─── الأهداف المتاحة لكل فئة ─── */
+  targetsFor(cat) {
+    const ar = I18N.lang() === 'ar';
+    const lbl = (o) => ({ id: o.id, label: ar ? o.ar : o.en });
+    try {
+      switch (cat) {
+        case 'player': return Data.CHARACTERS.map(lbl);
+        case 'weapon': return Data.WEAPONS.map(lbl);
+        case 'enemy': {
+          const out = [];
+          for (const id in Data.ENEMIES) out.push(lbl(Object.assign({ id }, Data.ENEMIES[id])));
+          Data.MINIBOSSES.forEach(m => out.push(lbl(m)));
+          for (const id in Data.BOSSES) out.push(lbl(Object.assign({ id }, Data.BOSSES[id])));
+          return out;
+        }
+        case 'familiar': return Data.COMPANIONS.filter(c => c.kind !== 'none').map(lbl);
+        case 'effect': return [{ id: 'trail', label: t('wdTrailTarget') }, { id: 'color', label: t('wdColorTarget') }];
+      }
+    } catch (e) { }
+    return [];
+  },
+  targetKey(cat, target) { return cat === 'effect' ? String(target) : cat + ':' + target; },
+  targetName(cat, target) {
+    const ar = I18N.lang() === 'ar';
+    try {
+      if (cat === 'effect') return target === 'trail' ? t('wdTrailTarget') : t('wdColorTarget');
+      if (cat === 'player') { const c = Data.char(target); return c ? (ar ? c.ar : c.en) : target; }
+      if (cat === 'weapon') { const w = Data.weapon(target); return w ? (ar ? w.ar : w.en) : target; }
+      if (cat === 'familiar') { const c = Data.comp(target); return c ? (ar ? c.ar : c.en) : target; }
+      if (cat === 'enemy') { const e = Data.enemy(target) || Data.boss(target) || Data.MINIBOSSES.find(m => m.id === target); return e ? (ar ? e.ar : e.en) : target; }
+    } catch (e) { }
+    return String(target);
+  },
+
+  /* ─── الارتداء ─── */
+  activeFor(key) { const id = this.state.active[key]; return (id && this.defs[id]) ? this.defs[id] : null; },
+  isActive(id) { for (const k in this.state.active) if (this.state.active[k] === id) return true; return false; },
+  setActive(cat, target, id) {
+    const key = this.targetKey(cat, target);
+    if (id == null) delete this.state.active[key];
+    else this.state.active[key] = id;
+    // إزاحة التداخل مع الكوزمتك المدمجة (أثر/لون) — أحدهما فقط يفعل
+    if (key === 'trail' && id) { Meta.cosmetics.equipped.trail = 'tr_none'; Save.mark(); }
+    if (key === 'color' && id) { Meta.cosmetics.equipped.color = 'cl_default'; Save.mark(); }
+    this.saveState(); this.recountAny();
+  },
+  clearActive(id) { for (const k in this.state.active) if (this.state.active[k] === id) { delete this.state.active[k]; this.saveState(); } this.recountAny(); },
+
+  /* ─── الفتح بالتقدم ─── */
+  isUnlocked(id) {
+    const d = this.defs[id]; if (!d) return true;
+    if (!d.unlock || d.unlock.type === 'none') return true;
+    return !!this.unlocked[id];
+  },
+  conditionText(d) {
+    const u = d.unlock || { type: 'none' };
+    switch (u.type) {
+      case 'none': return t('wdUnNone');
+      case 'level': return tf('wdUnlockLevel', u.value || 1);
+      case 'gold': return tf('wdUnlockGold', u.value || 0);
+      case 'streak': return tf('wdUnlockStreak', u.value || 1);
+      case 'runs': return tf('wdUnlockRuns', u.value || 1);
+      case 'achievement': {
+        const a = Data.ACHIEVEMENTS.find(x => x.id === u.value);
+        return tf('wdUnlockAch', a ? (I18N.lang() === 'ar' ? a.dar || a.ar : a.den || a.en) : u.value);
+      }
+      case 'secret': return t('wdUnlockSecret');
+    }
+    return '';
+  },
+  evalSecret(v) {
+    if (!v) return false;
+    if (String(v).startsWith('ach:')) return !!Meta.achievements[v.slice(4)];
+    const i = String(v).lastIndexOf(':');
+    if (i < 1) return false;
+    const k = String(v).slice(0, i), n = Number(String(v).slice(i + 1));
+    return ((Meta.stats || {})[k] || 0) >= n;
+  },
+  evalCond(d) {
+    const u = d.unlock || {}, v = u.value;
+    switch (u.type) {
+      case 'level': return (Meta.stats.maxLevel || 0) >= (v || 1);
+      case 'streak': return (Meta.stats.streakBest || 0) >= (v || 1);
+      case 'runs': return (Meta.stats.runs || 0) >= (v || 1);
+      case 'achievement': return !!Meta.achievements[v];
+      case 'secret': return this.evalSecret(v);
+      case 'gold': return false; // تُشترى يدويًا
+    }
+    return false;
+  },
+  unlockNow(id, celebrate) {
+    if (this.unlocked[id]) return;
+    this.unlocked[id] = Date.now(); this.saveUnlocked();
+    const d = this.defs[id];
+    if (d && celebrate) {
+      this.celebrate(d);
+      try { UI.toast('🎉 ' + t('skinUnlockedToast').replace('{n}', d.name), 'gold'); UI.haptic(60); } catch (e) { }
+      try { Ach.check(); } catch (e) { }
+    }
+  },
+  buyCustom(d) {
+    const cost = (d.unlock && d.unlock.value) || 0;
+    if (Meta.gold < cost) { try { UI.toast(t('notEnoughGold'), 'bad'); Audio.sfx('banish'); } catch (e) { } return false; }
+    Meta.gold -= cost;
+    Meta.stats.goldSpent = (Meta.stats.goldSpent || 0) + cost;
+    this.state.totalSpent = (this.state.totalSpent || 0) + cost;
+    Save.mark(); this.saveState();
+    this.unlockNow(d.id, true);
+    return true;
+  },
+  // يُستدعى بعد الارتقاء/الإنجاز/الجولات/فتح الخزانة
+  checkUnlocks() {
+    let changed = false;
+    for (const id in this.defs) {
+      const d = this.defs[id];
+      if (this.unlocked[id] || !d.unlock) continue;
+      const ty = d.unlock.type;
+      if (ty === 'none' || ty === 'gold') continue;
+      if (this.evalCond(d)) { this.unlockNow(id, true); changed = true; }
+    }
+    return changed;
+  },
+
+  /* ─── إدارة الحصة ─── */
+  quota() {
+    let ls = 0;
+    try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); ls += (k.length + (localStorage.getItem(k) || '').length) * 2; } } catch (e) { }
+    let imgs = 0, imgBytes = 0;
+    for (const id in this.defs) { const d = this.defs[id]; if (d.type === 'image') { imgs++; imgBytes += d.bytes || ((d.data || '').length * 0.75); } }
+    return { ls, imgs, imgBytes, pct: Math.min(1, ls / this.LS_LIMIT), warn: ls > this.LS_WARN, kb: Math.round(ls / 1024) };
+  },
+  unusedIds() {
+    const used = new Set(Object.values(this.state.active));
+    const out = [];
+    for (const id in this.defs) if (!used.has(id)) out.push(id);
+    return out;
+  },
+  cleanCount() { return this.unusedIds().length; },
+  cleanUnused() {
+    const ids = this.unusedIds();
+    ids.forEach(id => this.remove(id));
+    return ids.length;
+  },
+
+  /* ─── سبرايت الرسم: إيموجي/صورة → كانفس 128 مرة واحد ─── */
+  _kicked: null,
+  master(def) {
+    if (!def) return null;
+    const hit = this.spriteCache.get(def.id);
+    if (hit) return hit;
+    if (def.type === 'emoji' && def.data) {
+      const cv = document.createElement('canvas'); cv.width = 128; cv.height = 128;
+      const g = cv.getContext('2d');
+      g.font = "96px 'Segoe UI Emoji','Noto Color Emoji',sans-serif";
+      g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.fillText(def.data, 64, 70);
+      this.spriteCache.set(def.id, cv);
+      return cv;
+    }
+    const c = this.imgCache.get(def.id);
+    if (c && c.ready && c.cv) { this.spriteCache.set(def.id, c.cv); return c.cv; }
+    // حمل كسول: الصورة لم تصل بعد من IndexedDB (إقلاع متسارع) — اطلبها مرة واحدة
+    if (!this._kicked) this._kicked = new Set();
+    if (!this._kicked.has(def.id)) { this._kicked.add(def.id); this.loadSkin(def.id); }
+    return null;
+  },
+  // HTML للمعاينة في البطاقات (مزامنيًا مع احتياطي، ويُحدّث عند جاهزية الصور)
+  previewHTML(def, px) {
+    if (!def) return '';
+    const s = px || 64;
+    if (def.type === 'emoji') return '<span style="font-size:' + Math.round(s * 0.62) + 'px;line-height:1">' + U.esc(def.data) + '</span>';
+    const c = this.imgCache.get(def.id);
+    if (c && c.url) return '<img src="' + c.url + '" alt="" style="width:100%;height:100%;object-fit:contain">';
+    return '<span style="opacity:.4;font-size:' + Math.round(s * 0.4) + 'px">🖼</span>';
+  },
+  // معاينة حية أثناء التحرير (قبل الحفظ)
+  livePreview(data, type, url) {
+    if (type === 'emoji') return '<span style="font-size:inherit;line-height:1">' + U.esc(data || '') + '</span>';
+    if (url) return '<img src="' + url + '" style="width:100%;height:100%;object-fit:contain" alt="">';
+    return '<span style="opacity:.4">🖼</span>';
+  }
+};
+AS.Skins = Skins;
+Skins.loadAll();
+// ─── تحصين: الصور تُحمّل من IndexedDB بعد جهوزية اتصال قاعدة البيانات في الإقلاع ───
+(function () {
+  const sl = Save.load.bind(Save);
+  Save.load = async function () {
+    const m = await sl();
+    try { Skins.preloadImages(); } catch (e) { }
+    return m;
+  };
+})();
+/* ═══════════ v2.2 — تطبيق السكنات المخصصة على محرك الرسم + محرك الفتح ═══════════ */
+
+// ─── الاحتفال بفتح سكن: طبقة منبثقة + نغمة + اهتزاز ───
+Skins.celebrate = function (d) {
+  if (!d) return;
+  const el = document.getElementById('wd-celebrate');
+  if (!el) return;
+  const prev = el.querySelector('#wdc-prev'), name = el.querySelector('#wdc-name');
+  if (prev) {
+    prev.innerHTML = Skins.previewHTML(d, 96);
+    if (d.type === 'image') prev.style.background = 'rgba(245,197,66,.12)'; else prev.style.background = '';
+  }
+  if (name) name.textContent = d.name;
+  el.classList.remove('hidden');
+  try { Audio.sfx('unlock'); } catch (e) { }
+  clearTimeout(this._celT);
+  this._celT = setTimeout(() => el.classList.add('hidden'), 2600);
+};
+
+// ─── اللاعب: سكن مخصص (إيموجي/صورة) بدل الجسم المتجهي ───
+(function () {
+  Render._vecPlayer = Render.drawPlayer;
+  Render.drawPlayer = function (alpha, ctx) {
+    const r = Game.run;
+    if (!r || !r.player) return;
+    this.emitTrail(); // أثر الأقدام المخصص (يعمل مع المسارين)
+    const d = Skins.activeFor('player:' + r.charId);
+    if (!d || !Skins.isUnlocked(d.id)) return Render._vecPlayer.call(this, alpha, ctx);
+    const cv = Skins.master(d);
+    if (!cv) return Render._vecPlayer.call(this, alpha, ctx);
+    const p = r.player, ch = Data.char(r.charId);
+    const x = U.lerp(p.px, p.x, alpha), y = U.lerp(p.py, p.y, alpha);
+    // أثر الاندفاع المحفوظ
+    for (const g of p.trail) {
+      ctx.globalAlpha = Math.max(0, g.t) * 1.8; ctx.fillStyle = ch.color;
+      ctx.beginPath(); ctx.arc(g.x, g.y, 12, 0, U.TAU); ctx.fill(); ctx.globalAlpha = 1;
+    }
+    ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.beginPath(); ctx.ellipse(x, y + 13, 12, 4.5, 0, 0, U.TAU); ctx.fill();
+    if (p.iframe > 0 && Math.floor(p.iframe * 12) % 2 === 0) ctx.globalAlpha = 0.45;
+    const bob = Math.sin(p.animT * 10) * 1.8, s = 36;
+    ctx.drawImage(cv, x - s / 2, y - s / 2 + bob, s, s);
+    ctx.globalAlpha = 1;
+    if (p.dashT > 0) { ctx.strokeStyle = 'rgba(126,232,250,0.7)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, 18, 0, U.TAU); ctx.stroke(); }
+    if (p.blessT > 0) { ctx.strokeStyle = 'rgba(255,243,176,0.6)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, 20 + Math.sin(performance.now() / 200) * 2, 0, U.TAU); ctx.stroke(); }
+    if (p.curseT > 0) { ctx.strokeStyle = 'rgba(166,122,255,0.6)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, 21, 0, U.TAU); ctx.stroke(); }
+  };
+})();
+
+// ─── أثر الأقدام المخصص: جسيمات إيموجي خلف اللاعب أثناء الحركة ───
+(function () {
+  const last = { x: 0, y: 0, init: false };
+  Skins.trailParts = [];
+  Render.emitTrail = function () {
+    const r = Game.run;
+    if (!r || !r.player) { return; }
+    const d = Skins.activeFor('trail');
+    const list = Skins.trailParts;
+    // إdecay الجسيمات كل إطار
+    for (let i = list.length - 1; i >= 0; i--) { list[i].t -= 0.028; if (list[i].t <= 0) list.splice(i, 1); }
+    if (!d || !Skins.isUnlocked(d.id)) return;
+    const cv = Skins.master(d); if (!cv) return;
+    const p = r.player;
+    if (!last.init) { last.x = p.x; last.y = p.y; last.init = true; }
+    const moved = U.dist(last.x, last.y, p.x, p.y);
+    if (moved > 9 && list.length < 40 && Math.random() < 0.5) {
+      last.x = p.x; last.y = p.y;
+      list.push({ x: p.x - p.face.x * 8, y: p.y + 8, t: 1, cv });
+    }
+  };
+  Render.drawTrailParts = function (ctx) {
+    const list = Skins.trailParts;
+    for (let i = 0; i < list.length; i++) {
+      const g = list[i];
+      ctx.globalAlpha = g.t * 0.75;
+      const s = 10 + g.t * 10;
+      ctx.drawImage(g.cv, g.x - s / 2, g.y - s / 2, s, s);
+    }
+    ctx.globalAlpha = 1;
+  };
+  // رسمها مع طبقة الجواهر (قبل الأعداء) لتظهر تحت الكيانات
+  const dr = Render.drawOrbs.bind(Render);
+  Render.drawOrbs = function (alpha) {
+    if (Skins.trailParts.length && Game.run) { this.drawTrailParts(this.ctx); }
+    return dr(alpha);
+  };
+})();
+
+// ─── الأعداء: سكن مخصص لكل نوع (مع الحلقات والحالات كما هي) ───
+(function () {
+  Render._vecEnemy = Render.drawEnemies;
+  Render.drawEnemies = function (alpha, ctx) {
+    // مسار سريع: لا سكنات أعداء مُرتداة ← الرسم الأصلي مباشرة (بدون تخصيص ذاكرة كل إطار)
+    if (!Skins._any.enemy) {
+      return Render._vecEnemy.call(this, alpha, ctx);
+    }
+    const P = Core.pools.enemies, hidden = [];
+    P.items.forEach(e => {
+      if (e.active && Skins.activeFor('enemy:' + e.def.id)) { e.active = false; hidden.push(e); }
+    });
+    try { Render._vecEnemy.call(this, alpha, ctx); }
+    finally { hidden.forEach(e => { e.active = true; }); }
+    const r = Game.run;
+    for (const e of hidden) this.drawSkinEnemy(e, alpha, ctx, r);
+  };
+  // رسم عدو بسكن مخصص: ظل + حلقات نخبة/صغير + سبرايت + كل تراكبات الحالات
+  Render.drawSkinEnemy = function (e, alpha, ctx, r) {
+    const x = U.lerp(e.px, e.x, alpha), y = U.lerp(e.py, e.y, alpha);
+    const w2 = this.w / 2 + 70, h2 = this.h / 2 + 70;
+    const dx = x - this.cam.x, dy = y - this.cam.y;
+    if (dx < -w2 || dx > w2 || dy < -h2 || dy > h2) return;
+    const d = Skins.activeFor('enemy:' + e.def.id);
+    const cv = d && Skins.master(d);
+    if (!cv) return;
+    ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(x, y + e.r * 0.9, e.r * 0.9, e.r * 0.32, 0, 0, U.TAU); ctx.fill();
+    const wob = 1 + Math.sin(e.animT * 9) * 0.07;
+    ctx.save(); ctx.translate(x, y); ctx.scale(2 - wob, wob);
+    if (e.ghosting) ctx.globalAlpha = 0.45;
+    if (e.elite) { ctx.strokeStyle = e.elite.color; ctx.lineWidth = 2; ctx.globalAlpha = 0.7; ctx.beginPath(); ctx.arc(0, 0, e.r + 5 + Math.sin(e.animT * 6) * 2, 0, U.TAU); ctx.stroke(); ctx.globalAlpha = e.ghosting ? 0.45 : 1; }
+    if (e.mini) { ctx.strokeStyle = '#b06cff'; ctx.lineWidth = 2.5; ctx.globalAlpha = 0.8; ctx.beginPath(); ctx.arc(0, 0, e.r + 7 + Math.sin(e.animT * 5) * 2, 0, U.TAU); ctx.stroke(); ctx.globalAlpha = 1; }
+    const s = e.r * 2.6;
+    ctx.drawImage(cv, -s / 2, -s / 2, s, s);
+    ctx.restore(); ctx.globalAlpha = 1;
+    // تحذير مسبق
+    if (e.state === 'windup' || e.state === 'diveTele') {
+      ctx.strokeStyle = 'rgba(255,220,80,0.9)'; ctx.lineWidth = 2; ctx.setLineDash([6, 5]);
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(r.player.x, r.player.y); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = 'rgba(255,220,80,0.95)'; ctx.font = 'bold 16px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('!', x, y - e.r - 10);
+    }
+    if ((e.elite || e.mini || e.def.behavior === 'brute') && e.hp < e.maxHp) {
+      const bw = e.r * 2;
+      ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(x - bw / 2, y - e.r - 10, bw, 4);
+      ctx.fillStyle = e.mini ? '#b06cff' : '#ff5964'; ctx.fillRect(x - bw / 2, y - e.r - 10, bw * (e.hp / e.maxHp), 4);
+    }
+    if (e.flash > 0) { ctx.globalAlpha = e.flash * 0.65; ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x, y, e.r, 0, U.TAU); ctx.fill(); ctx.globalAlpha = 1; }
+    if (e.freezeT > 0) { ctx.globalAlpha = 0.4; ctx.fillStyle = '#9fd8ff'; ctx.beginPath(); ctx.arc(x, y, e.r + 2, 0, U.TAU); ctx.fill(); ctx.globalAlpha = 1; }
+    if (e.shockT > 0 && Math.random() < 0.3) { ctx.strokeStyle = '#ffe95c'; ctx.beginPath(); ctx.moveTo(x - e.r, y - e.r); ctx.lineTo(x + e.r * 0.4, y - e.r * 0.3); ctx.stroke(); }
+    if (e.vulnT > 0) { ctx.strokeStyle = '#ff9a5c'; ctx.lineWidth = 1.6; ctx.globalAlpha = 0.8; ctx.beginPath(); ctx.arc(x, y, e.r + 3.5, 0.2, 1.35); ctx.arc(x, y, e.r + 3.5, 3.35, 4.5); ctx.stroke(); ctx.globalAlpha = 1; }
+    if (e.charmT > 0) { ctx.strokeStyle = '#ff8ad8'; ctx.lineWidth = 2; ctx.globalAlpha = 0.85; ctx.beginPath(); ctx.arc(x, y, e.r + 5, 0, U.TAU); ctx.stroke(); ctx.globalAlpha = 1; }
+    if (e.weakenT > 0) { ctx.globalAlpha = 0.35; ctx.fillStyle = '#333'; ctx.beginPath(); ctx.arc(x, y, e.r, 0, U.TAU); ctx.fill(); ctx.globalAlpha = 1; }
+  };
+})();
+
+// ─── المرافقون: سكن مخصص بدل الرسم المتجهي ───
+(function () {
+  Render._vecComp = Render.drawCompanion;
+  Render.drawCompanion = function (alpha) {
+    const r = Game.run;
+    if (!r) return;
+    const d = Skins.activeFor('familiar:' + r.companion);
+    const cv = (d && Skins.isUnlocked(d.id)) ? Skins.master(d) : null;
+    if (!cv) return Render._vecComp.call(this, alpha);
+    const cs = r.compState, x = cs.x, y = cs.y, ctx = this.ctx;
+    ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.beginPath(); ctx.ellipse(x, y + 10, 9, 3, 0, 0, U.TAU); ctx.fill();
+    const s = 24 + Math.sin(performance.now() / 300) * 1.5;
+    ctx.drawImage(cv, x - s / 2, y - s / 2, s, s);
+  };
+})();
+
+// ─── المقذوفات: سبرايت السلاح المخصص فوق الرسم الأصلي ───
+(function () {
+  Render._vecProj = Render.drawProjectiles;
+  Render.drawProjectiles = function (alpha, ctx, perf) {
+    Render._vecProj.call(this, alpha, ctx, perf);
+    Core.pools.proj.forEach(pr => {
+      const wid = pr.w && pr.w.def && pr.w.def.id;
+      if (!wid) return;
+      const d = Skins.activeFor('weapon:' + wid);
+      if (!d || !Skins.isUnlocked(d.id)) return;
+      const cv = Skins.master(d); if (!cv) return;
+      const x = U.lerp(pr.px, pr.x, alpha), y = U.lerp(pr.py, pr.y, alpha);
+      const s = pr.r * 2.7;
+      if (pr.kind === 'rain') { ctx.drawImage(cv, x - s / 2, (y - pr.z) - s / 2, s, s); }
+      else if (pr.kind === 'boomerang') { ctx.save(); ctx.translate(x, y); ctx.rotate(pr.angle); ctx.drawImage(cv, -s / 2, -s / 2, s, s); ctx.restore(); }
+      else if (pr.kind === 'straight' || pr.kind === 'bounce' || pr.kind === 'homing' || pr.kind === 'ring') { ctx.drawImage(cv, x - s / 2, y - s / 2, s, s); }
+    });
+  };
+})();
+
+// ─── لون السحر المخصص: يتقدم على اللون المدمج ───
+(function () {
+  const baseTint = Render.tint;
+  Render.tint = function (c) {
+    const d = Skins.activeFor('color');
+    if (d && Skins.isUnlocked(d.id) && d.type === 'emoji' && d.data) return baseTint.call(this, c);
+    if (d && Skins.isUnlocked(d.id) && /^#[0-9a-fA-F]{3,8}$/.test(d.data || '')) return d.data;
+    return baseTint.call(this, c);
+  };
+})();
+
+/* ─── محرك الفتح: يُفحص بعد الارتقاء والإنجازات وفتح الشاشات ─── */
+(function () {
+  if (AS.Prog && Prog.choose) {
+    const ch = Prog.choose.bind(Prog);
+    Prog.choose = function (o) { const res = ch(o); try { Skins.checkUnlocks(); } catch (e) { } return res; };
+  }
+  if (AS.Ach && Ach.check) {
+    const ac = Ach.check.bind(Ach);
+    Ach.check = function () { const res = ac(); try { Skins.checkUnlocks(); } catch (e) { } return res; };
+  }
+  if (AS.UI && UI.showScreen) {
+    const ss = UI.showScreen.bind(UI);
+    UI.showScreen = function (id) {
+      try { if (id === 'screen-menu' || id === 'screen-wardrobe') Skins.checkUnlocks(); } catch (e) { }
+      return ss(id);
+    };
+  }
+  Bus.on('langChanged', () => { try { Skins.spriteCache.clear(); } catch (e) { } });
+})();
+/* ═══════════ v2.2 — UI: خزانة السكنات المخصصة (تبويبات + بطاقات + نافذة سكن) ═══════════ */
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const ar = () => I18N.lang() === 'ar';
+  const QUICK = ['🧙', '🥷', '🧛', '🧚', '🐉', '🐺', '👻', '💀', '🤖', '🐱', '🦇', '🕷️', '🪄', '⚔️', '🛡️', '🔥', '❄️', '⚡', '☄️', '🌟'];
+
+  // ─── عناصر كل تبويب: قائمة أوصاف بطاقات ───
+  UI.wardItems = function (tab) {
+    const out = [];
+    const L = (label) => out.push({ kind: 'head', label });
+    if (tab === 'player') {
+      const cs = Data.CHARACTERS;
+      cs.forEach(c => {
+        L((ar() ? c.ar : c.en));
+        Data.SKINS.filter(s => s.ch === c.id).forEach(s => out.push({ kind: 'builtin', item: s, cat: 'skin', target: c.id }));
+        for (const id in Skins.defs) { const d = Skins.defs[id]; if (d.category === 'player' && d.target === c.id) out.push({ kind: 'custom', def: d }); }
+      });
+    } else if (tab === 'weapon') {
+      L(t('kindNew') + ' — ' + t('wdHintSlot'));
+      Data.WEAPONS.forEach(w => {
+        const d = Object.values(Skins.defs).find(x => x.category === 'weapon' && x.target === w.id);
+        out.push({ kind: 'slot', cat: 'weapon', target: w.id, def: d || null, item: w });
+      });
+    } else if (tab === 'enemy') {
+      L(t('codexEnemies') + ' — ' + t('wdHintSlot'));
+      for (const id in Data.ENEMIES) {
+        const d = Object.values(Skins.defs).find(x => x.category === 'enemy' && x.target === id);
+        out.push({ kind: 'slot', cat: 'enemy', target: id, def: d || null, item: Data.ENEMIES[id] });
+      }
+      if (Data.MINIBOSSES.length) {
+        L(t('codexBosses'));
+        Data.MINIBOSSES.forEach(m => {
+          const d = Object.values(Skins.defs).find(x => x.category === 'enemy' && x.target === m.id);
+          out.push({ kind: 'slot', cat: 'enemy', target: m.id, def: d || null, item: m });
+        });
+      }
+      for (const id in Data.BOSSES) {
+        const d = Object.values(Skins.defs).find(x => x.category === 'enemy' && x.target === id);
+        out.push({ kind: 'slot', cat: 'enemy', target: id, def: d || null, item: Data.BOSSES[id] });
+      }
+    } else if (tab === 'familiar') {
+      Data.COMPANIONS.filter(c => c.kind !== 'none').forEach(c => {
+        const d = Object.values(Skins.defs).find(x => x.category === 'familiar' && x.target === c.id);
+        out.push({ kind: 'slot', cat: 'familiar', target: c.id, def: d || null, item: c });
+      });
+    } else if (tab === 'effect') {
+      L(t('wdSecTrails'));
+      Data.TRAILS.forEach(s => out.push({ kind: 'builtin', item: s, cat: 'trail', target: 'trail' }));
+      for (const id in Skins.defs) { const d = Skins.defs[id]; if (d.category === 'effect' && d.target === 'trail') out.push({ kind: 'custom', def: d }); }
+      L(t('wdSecColors'));
+      Data.SPELL_COLORS.forEach(s => out.push({ kind: 'builtin', item: s, cat: 'color', target: 'color' }));
+      for (const id in Skins.defs) { const d = Skins.defs[id]; if (d.category === 'effect' && d.target === 'color') out.push({ kind: 'custom', def: d }); }
+    }
+    return out;
+  };
+
+  // ─── بطاقة سكن واحدة ───
+  UI.wardCard = function (it) {
+    const el = document.createElement('div');
+    if (it.kind === 'head') { el.className = 'wd-sechead'; el.textContent = it.label; return el; }
+    if (it.kind === 'builtin') return this.wardBuiltinCard(it, el);
+    if (it.kind === 'slot') return this.wardSlotCard(it, el);
+    return this.wardCustomCard(it, el);
+  };
+
+  // بطاقة كوزمتك مدمجة (أزياء/آثار/ألوان)
+  UI.wardBuiltinCard = function (it, el) {
+    const s = it.item, owns = Wardrobe.owns(it.cat, s.id);
+    const eqKey = it.cat === 'skin' ? 'skin' : it.cat === 'trail' ? 'trail' : 'color';
+    const eq = Meta.cosmetics.equipped[eqKey] === s.id;
+    el.className = 'wd-card' + (eq ? ' active' : '') + (owns ? '' : ' locked');
+    const col = s.body || s.color || '#2a3352';
+    el.innerHTML =
+      '<div class="wd-badge">' + (eq ? '⭐' : owns ? '✅' : '🔒') + '</div>' +
+      '<div class="wd-prev" style="background:radial-gradient(circle at 35% 30%,' + col + ',rgba(0,0,0,.55))"></div>' +
+      '<div class="wd-name">' + U.esc(ar() ? s.ar : s.en) + '</div>' +
+      '<div class="wd-sub">' + t('wdBuiltin') + (s.leg ? ' · ' + t('rarityLeg') : '') + '</div>';
+    const acts = document.createElement('div'); acts.className = 'wd-acts';
+    const b = document.createElement('button');
+    b.className = 'btn' + (owns ? '' : ' gold');
+    b.style.minHeight = '30px';
+    b.textContent = eq ? t('equipped') : owns ? t('equip') : U.num(s.cost || 0) + (s.cur === 'shards' ? ' ✦' : ' ◉');
+    b.onclick = () => {
+      Audio.sfx('click');
+      const kind = it.cat === 'skin' ? 'skins' : it.cat === 'trail' ? 'trails' : 'colors';
+      const effTarget = it.cat === 'trail' ? 'trail' : 'color';
+      if (eq) {
+        // إزالة الارتداء (الأثر واللون فقط — الأزياء تبقى مُرتداة)
+        if (it.cat === 'trail') Wardrobe.equip('trails', 'tr_none');
+        else if (it.cat === 'color') Wardrobe.equip('colors', 'cl_default');
+      } else if (owns) {
+        Wardrobe.equip(kind, s.id);
+        if (it.cat !== 'skin') Skins.setActive('effect', effTarget, null); // إزاحة السكن المخصص إن وجد
+        try { UI.toast(t('appliedToast'), 'ok'); } catch (e) { }
+      } else if (Wardrobe.buy(it.cat, s)) {
+        Wardrobe.equip(kind, s.id);
+        if (it.cat !== 'skin') Skins.setActive('effect', effTarget, null);
+        UI.toast(t('newUnlock'), 'gold');
+      } else {
+        UI.toast(s.cur === 'shards' ? t('notEnough') : t('notEnoughGold'), 'bad'); Audio.sfx('banish');
+      }
+      this.refreshMenuCurrency(); this.buildWardrobe(); Ach.check();
+    };
+    acts.appendChild(b); el.appendChild(acts);
+    return el;
+  };
+
+  // بطاقة خانة فارغة (سلاح/عدو/مرافق بلا سكن مخصص)
+  UI.wardSlotCard = function (it, el) {
+    const d = it.def;
+    if (d) return this.wardCustomCard({ kind: 'custom', def: d }, el);
+    const w = it.item, col = w.color || '#2a3352';
+    el.className = 'wd-card';
+    el.innerHTML =
+      '<div class="wd-prev" style="background:radial-gradient(circle at 35% 30%,' + col + ',rgba(0,0,0,.5))"><span style="font-size:1.6em;opacity:.65">＋</span></div>' +
+      '<div class="wd-name">' + U.esc(ar() ? w.ar : w.en) + '</div>' +
+      '<div class="wd-sub">' + t('wdHintSlot') + '</div>';
+    el.onclick = () => { Audio.sfx('click'); this.openSkinModal(null, it.cat, it.target); };
+    return el;
+  };
+
+  // بطاقة سكن مخصص
+  UI.wardCustomCard = function (it, el) {
+    const d = it.def, unlocked = Skins.isUnlocked(d.id);
+    const active = Skins.isActive(d.id);
+    el.className = 'wd-card' + (active ? ' active' : '') + (unlocked ? '' : ' locked');
+    el.innerHTML =
+      '<div class="wd-badge">' + (active ? '⭐' : unlocked ? '✅' : '🔒') + '</div>' +
+      '<div class="wd-prev">' + Skins.previewHTML(d, 64) + '</div>' +
+      '<div class="wd-name">' + U.esc(d.name) + '</div>' +
+      '<div class="wd-sub">' + (unlocked ? t('wdCustom') + ' · ' + Skins.targetName(d.category, d.target) : U.esc(Skins.conditionText(d))) + '</div>';
+    const acts = document.createElement('div'); acts.className = 'wd-acts';
+    const mk = (txt, cls, fn) => { const b = document.createElement('button'); b.className = 'btn' + (cls ? ' ' + cls : ''); b.style.minHeight = '30px'; b.textContent = txt; b.onclick = (ev) => { ev.stopPropagation(); fn(); }; acts.appendChild(b); return b; };
+    if (active) {
+      mk('⭐', 'ghost', () => {
+        Audio.sfx('click'); Skins.setActive(d.category, d.target, null);
+        this.buildWardrobe();
+      });
+    } else if (unlocked) {
+      mk(t('wdApply'), 'gold', () => {
+        Audio.sfx('unlock'); Skins.setActive(d.category, d.target, d.id);
+        try { UI.toast(t('appliedToast'), 'ok'); } catch (e) { }
+        this.buildWardrobe();
+      });
+    } else if (d.unlock && d.unlock.type === 'gold') {
+      mk(U.num(d.unlock.value) + ' ◉', 'gold', () => {
+        Audio.sfx('click');
+        this.confirm(tf('confirmBuySkin', d.unlock.value || 0), () => {
+          if (Skins.buyCustom(d)) { this.refreshMenuCurrency(); }
+          this.buildWardrobe();
+        });
+      });
+    } else {
+      mk('🔒', 'ghost', () => { UI.toast(Skins.conditionText(d), 'dim'); Audio.sfx('banish'); });
+    }
+    mk(t('wdEdit'), 'ghost', () => { Audio.sfx('click'); this.openSkinModal(d.id); });
+    mk(t('wdDup'), 'ghost', () => { Audio.sfx('click'); Skins.duplicate(d.id); this.buildWardrobe(); });
+    mk(t('wdDel'), 'ghost danger', () => {
+      Audio.sfx('click');
+      this.confirm(t('confirmDelSkin'), () => { Skins.remove(d.id); UI.toast(t('skinDeleted'), 'dim'); this.buildWardrobe(); });
+    });
+    el.appendChild(acts);
+    return el;
+  };
+
+  // ─── عداد التخزين ───
+  UI.buildStorageMeter = function () {
+    const q = Skins.quota();
+    const fill = $('wd-store-fill'), txt = $('wd-store-txt');
+    if (fill) {
+      fill.style.transform = 'scaleX(' + Math.max(0.02, q.pct) + ')';
+      fill.style.background = q.warn ? 'var(--danger)' : 'var(--ok)';
+    }
+    if (txt) txt.textContent = t('wdStoreTxt').replace('{k}', U.num(q.kb) + 'KB').replace('{n}', U.num(q.imgs));
+    if (q.warn) UI.toast(t('wdStoreWarn'), 'bad');
+  };
+
+  // ─── بناء شاشة الخزانة كاملة ───
+  UI._wdTab = 'player';
+  UI.buildWardrobe = function () {
+    const grid = $('wd-grid');
+    if (!grid) return;
+    const tabs = $('wd-tabs').querySelectorAll('.tab');
+    tabs.forEach(tb => {
+      tb.classList.toggle('on', tb.getAttribute('data-w') === this._wdTab);
+      tb.onclick = () => { this._wdTab = tb.getAttribute('data-w'); Audio.sfx('click'); this.buildWardrobe(); };
+    });
+    $('wd-add').onclick = () => { Audio.sfx('click'); this.openSkinModal(null); };
+    $('wd-clean').onclick = () => {
+      Audio.sfx('click');
+      const n = Skins.cleanCount();
+      if (!n) { this.toast(t('nothingToClean'), 'dim'); return; }
+      this.confirm(tf('confirmClean', n), () => { const c = Skins.cleanUnused(); this.toast(tf('cleanedToast', c), 'ok'); this.buildWardrobe(); });
+    };
+    $('wd-reset').onclick = () => {
+      Audio.sfx('click');
+      this.confirm(t('confirmResetSkins'), () => { Skins.resetAll(); this.buildWardrobe(); this.toast(t('wdResetDone'), 'ok'); });
+    };
+    this.buildStorageMeter();
+    grid.innerHTML = '';
+    const items = this.wardItems(this._wdTab);
+    if (this._wdTab === 'player' && !Object.keys(Skins.defs).some(k => Skins.defs[k].category === 'player')) {
+      // لا نُخفي الأزياء المدمجة — تلميح فقط أعلى القائمة
+      const hint = document.createElement('div'); hint.className = 'wd-sechead'; hint.textContent = t('wdNoCustom');
+      grid.appendChild(hint);
+    }
+    items.forEach(it => grid.appendChild(this.wardCard(it)));
+    const g = $('ward-gold'); if (g) g.textContent = U.num(Meta.gold);
+    const sh = $('ward-shards'); if (sh) sh.textContent = U.num(Meta.shards);
+  };
+
+  /* ═══════ نافذة إضافة/تعديل سكن ═══════ */
+  UI._skinEditId = null;
+  UI._skinTmp = { type: 'emoji', data: '', url: '', bytes: 0 };
+
+  UI.openSkinModal = function (editId, presetCat, presetTarget) {
+    this._skinEditId = editId || null;
+    const d = editId ? Skins.defs[editId] : null;
+    this._skinTmp = { type: d ? d.type : 'emoji', data: d ? d.data : '', url: d ? ((Skins.imgCache.get(d.id) || {}).url || '') : '', bytes: d ? (d.bytes || 0) : 0 };
+    // الحقول
+    $('wdm-title').textContent = d ? t('wdEditTitle') : t('wdAdd');
+    $('wdm-name').value = d ? d.name : '';
+    this.setSkinKind(this._skinTmp.type);
+    $('wdm-emoji').value = d && d.type === 'emoji' ? d.data : '';
+    // الفئة والهدف
+    const catSel = $('wdm-cat');
+    const cat = d ? d.category : (presetCat || 'player');
+    catSel.value = cat;
+    catSel.onchange = () => { this.fillSkinTargets(catSel.value, null); this.updateSkinUnlockUI(); };
+    this.fillSkinTargets(cat, d ? d.target : (presetTarget || null));
+    // شرط الفتح
+    const u = d ? (d.unlock || { type: 'none' }) : { type: 'none' };
+    $('wdm-utype').value = u.type || 'none';
+    $('wdm-uval').value = (u.type && u.type !== 'none' && u.type !== 'achievement' && u.type !== 'secret' && u.value) ? u.value : '';
+    $('wdm-uach').value = u.type === 'achievement' ? (u.value || '') : '';
+    $('wdm-uval').placeholder = u.type === 'secret' ? 'kills:1000' : '10';
+    this.updateSkinUnlockUI();
+    // لوحة الإيموجي السريعة
+    const q = $('wdm-quick'); q.innerHTML = '';
+    QUICK.forEach(e => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.textContent = e;
+      b.onclick = () => { $('wdm-emoji').value = e; this.updateSkinPreviews(); };
+      q.appendChild(b);
+    });
+    this.updateSkinPreviews();
+    UI.showScreen('screen-skin');
+  };
+
+  UI.setSkinKind = function (k) {
+    this._skinTmp.type = k;
+    $('wdm-k-emoji').classList.toggle('on', k === 'emoji');
+    $('wdm-k-image').classList.toggle('on', k === 'image');
+    $('wdm-emoji-box').classList.toggle('hidden', k !== 'emoji');
+    $('wdm-img-box').classList.toggle('hidden', k !== 'image');
+  };
+
+  UI.fillSkinTargets = function (cat, selected) {
+    const sel = $('wdm-target');
+    sel.innerHTML = '';
+    Skins.targetsFor(cat).forEach(o => {
+      const op = document.createElement('option');
+      op.value = o.id; op.textContent = o.label;
+      sel.appendChild(op);
+    });
+    if (selected) sel.value = selected;
+  };
+
+  UI.updateSkinUnlockUI = function () {
+    const ty = $('wdm-utype').value;
+    $('wdm-uval').classList.toggle('hidden', !(ty === 'level' || ty === 'gold' || ty === 'streak' || ty === 'runs' || ty === 'secret'));
+    $('wdm-uach').classList.toggle('hidden', ty !== 'achievement');
+    $('wdm-uhint').textContent = ty === 'secret' ? t('wdSecretHint') : (ty === 'gold' ? tf('wdUnlockGold', Number($('wdm-uval').value) || 0) : '');
+    if (ty === 'secret') $('wdm-uval').placeholder = 'kills:1000'; else $('wdm-uval').placeholder = '10';
+  };
+
+  UI.updateSkinPreviews = function () {
+    const tp = this._skinTmp;
+    const data = tp.type === 'emoji' ? ($('wdm-emoji').value || '') : tp.url;
+    const html = Skins.livePreview(data, tp.type, tp.url);
+    $('wdm-pv32').innerHTML = html; $('wdm-pv96').innerHTML = html;
+  };
+
+  UI.bindSkinModal = function () {
+    // نوع المصدر
+    $('wdm-k-emoji').onclick = () => { Audio.sfx('click'); this.setSkinKind('emoji'); this.updateSkinPreviews(); };
+    $('wdm-k-image').onclick = () => { Audio.sfx('click'); this.setSkinKind('image'); this.updateSkinPreviews(); };
+    $('wdm-emoji').oninput = () => this.updateSkinPreviews();
+    // شرط الفتح
+    $('wdm-utype').onchange = () => this.updateSkinUnlockUI();
+    $('wdm-uval').oninput = () => this.updateSkinUnlockUI();
+    // قائمة الإنجازات
+    const ach = $('wdm-uach'); ach.innerHTML = '';
+    const list = Data.ACHIEVEMENTS.filter(a => !a.secret);
+    if (!list.length) { const op = document.createElement('option'); op.value = ''; op.textContent = t('wdAchNone'); ach.appendChild(op); }
+    list.forEach(a => {
+      const op = document.createElement('option');
+      op.value = a.id; op.textContent = (ar() ? (a.dar || a.ar) : (a.den || a.en));
+      ach.appendChild(op);
+    });
+    // رفع الصورة: نقرة + سحب وإفلات
+    const drop = $('wdm-drop'), file = $('wdm-file');
+    drop.onclick = () => file.click();
+    file.onchange = () => { if (file.files && file.files[0]) this.handleSkinFile(file.files[0]); file.value = ''; };
+    ['dragover', 'dragenter'].forEach(ev => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add('over'); }));
+    ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove('over'); }));
+    drop.addEventListener('drop', (e) => {
+      const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (f) this.handleSkinFile(f);
+    });
+    // حفظ
+    $('wdm-save').onclick = () => this.saveSkinModal();
+    // إلغاء عبر أزرار btn-back داخل النافذة
+    document.querySelectorAll('#screen-skin .btn-back').forEach(b => b.onclick = () => { Audio.sfx('click'); UI.showScreen('screen-wardrobe'); UI.buildWardrobe(); });
+  };
+
+  UI.handleSkinFile = function (f) {
+    $('wdm-drop').querySelector('span').textContent = t('wdCompressing');
+    Skins.compressImage(f).then(res => {
+      $('wdm-drop').querySelector('span').textContent = t('wdDrop');
+      if (res.err) { UI.toast(t(res.err), 'bad'); Audio.sfx('banish'); return; }
+      this._skinTmp.url = res.url; this._skinTmp.bytes = res.bytes || 0; this._skinTmp.data = res.url;
+      this.updateSkinPreviews();
+      Audio.sfx('click');
+    });
+  };
+
+  UI.saveSkinModal = function () {
+    const name = ($('wdm-name').value || '').trim();
+    if (!name) { UI.toast(t('wdNameReq'), 'bad'); return; }
+    const cat = $('wdm-cat').value, target = $('wdm-target').value;
+    if (!target) { UI.toast(t('wdNeedTarget'), 'bad'); return; }
+    const ty = $('wdm-utype').value;
+    let unlock = { type: 'none', value: null };
+    if (ty === 'achievement') unlock = { type: 'achievement', value: $('wdm-uach').value || null };
+    else if (ty === 'secret') unlock = { type: 'secret', value: ($('wdm-uval').value || '').trim() || null };
+    else if (ty !== 'none') unlock = { type: ty, value: Number($('wdm-uval').value) || 1 };
+    const tp = this._skinTmp;
+    if (tp.type === 'emoji' && !($('wdm-emoji').value || '').trim()) { UI.toast(t('wdNeedData'), 'bad'); return; }
+    if (tp.type === 'image' && !tp.url) { UI.toast(t('wdNeedData'), 'bad'); return; }
+    const payload = {
+      name, type: tp.type, category: cat, target, unlock,
+      data: tp.type === 'emoji' ? $('wdm-emoji').value.trim() : '',
+      bytes: tp.bytes || 0
+    };
+    if (tp.type === 'image') payload._img = tp.url;
+    if (this._skinEditId) {
+      Skins.update(this._skinEditId, payload);
+      // تغيير النوع من صورة إلى إيموجي: نظّف الصورة المخزنة
+      if (tp.type === 'emoji') { Save.storeDel(Skins.IMG_STORE, this._skinEditId); Skins.imgCache.delete(this._skinEditId); Skins.spriteCache.delete(this._skinEditId); }
+    } else {
+      Skins.add(payload);
+    }
+    UI.toast(t('skinSaved'), 'ok'); Audio.sfx('unlock');
+    UI.showScreen('screen-wardrobe'); UI.buildWardrobe();
+  };
+
+  // ─── ربط الخزانة عند الإقلاع + إعادة البناء عند تغيير اللغة/جاهزية الصور ───
+  (function () {
+    const init = UI.init.bind(UI);
+    UI.init = function () {
+      init();
+      UI.bindSkinModal();
+      // الصور تُحمّل الآن بعد اكتمال الحفظ وواجهة المستخدم (اتصال IndexedDB جاهز)
+      try { Skins.preloadImages(); } catch (e) { }
+      // زر اللغة يبني من جديد لتسميات الأهداف
+      Bus.on('langChanged', () => {
+        if (!$('screen-wardrobe').classList.contains('hidden')) UI.buildWardrobe();
+        if (!$('screen-skin').classList.contains('hidden')) { const id = UI._skinEditId; UI.openSkinModal(id); }
+      });
+      Bus.on('skinsLoaded', () => {
+        if (!$('screen-wardrobe').classList.contains('hidden')) UI.buildWardrobe();
+      });
+    };
+  })();
 })();
 </script>
 </body>
